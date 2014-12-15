@@ -26,12 +26,10 @@ class Control_guest
 			
 			$this->type ="Local";
 
-
 		}elseif ($type=='Remote') {
 
 			$this->type ="Remote";
-			
-			
+		
 		}elseif ($type=='txt') {
 
 			$this->type ="txt";
@@ -92,8 +90,7 @@ class Control_guest
 		//In case of 'txt' scope .
 
 		require 'TypeRecord/txt.php';	
-			
-			
+					
 		}
 
 
@@ -221,7 +218,7 @@ class Control_guest
 	///////////////////////////////////////
 	//Method: Country.
 	public function geo(){
-		
+				
 		$ip = $_SERVER['REMOTE_ADDR'];
 		
 		$url = sprintf($this->api, $ip);
@@ -230,8 +227,7 @@ class Control_guest
 
 		$this->properties= json_decode($data,true);
 
-
-	}
+}
 
 	public function sendRequest($url)
 	{
@@ -241,6 +237,8 @@ class Control_guest
 
 		return curl_exec($curl);
 	}
+
+	
 }
 
  ?>
