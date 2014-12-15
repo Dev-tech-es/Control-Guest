@@ -1,9 +1,8 @@
-[![download](http://daigaku.chabudai.es/css/img/classic_web_buttons_one.png)](https://github.com/brimo300/Control-Guest.git) 
 Control-Guest [ver.1.0]
 =============
-
-
 ##Management analysis of website visits by PHP programming.
+
+[![download](http://daigaku.chabudai.es/css/img/classic_web_buttons_one.png)](https://github.com/brimo300/Control-Guest.git) 
 
 Configuration
 =============
