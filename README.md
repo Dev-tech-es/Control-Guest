@@ -23,32 +23,36 @@ The option 'Local' is directed to developing local scope .
 The option 'Remote' is directed to online projects.
 The option ' txt ' is aimed for any type of project because it creates log files of users ' .txt ' ;
 
+Enable IP geolocation
+=============
 ```
-<?php 
-//We called to method
-$log -> createLog(/*May indicate an optional parameter.*/);
+$log -> geo();
+```
+Enabled  time zone.
+=============
+Determine the date and time of the visit.
 
-/*
+```
+<?php
+$log ->time();
+?>
+```
+Create the record.
+=============
 The optional parameter is :
 The name of the file type if you 
 determine in case the parameter 'txt'.
 
-If you have chosen the type ' txt ' if you
-do not enter any name the default is 'log' .
-*/
+```
+<?php 
+//We called to method
+$log -> createLog(/*May indicate an optional parameter.*/);
  ?>
 ```
-Complementary method .
-=============
-Determine your time zone.
-
-```
-<?php
-$log ->time(/*Show time zone.*/);
-//Default value: Europe/Madrid
-?>
-```
+If you have chosen the type ' txt ' if you
+do not enter any name the default is 'log' .
 Information on time zones .
+
 =============
 Then leave a link to see him spelling of your time zone.
 [+info: Time zones](http://php.net/manual/es/timezones.php)
