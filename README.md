@@ -1,6 +1,8 @@
 Control-Guest [ver.1.0]
 =============
-Management analysis of website visits by PHP programming.
+[![Build Status](https://travis-ci.org/simkimsia/UtilityBehaviors.png)](http://chabudai.es/GitHub) 
+
+##Management analysis of website visits by PHP programming.
 
 Configuration
 =============
