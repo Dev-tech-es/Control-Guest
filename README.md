@@ -17,7 +17,7 @@ Types of records:
  2. Remote
  3. txt
 
-The option 'Local' is directed to developing local scope .
+The option 'Local' is directed to developing local scope ./n
 The option 'Remote' is directed to online projects.
 The option ' txt ' is aimed for any type of project because it creates log files of users ' .txt ' ;
 
