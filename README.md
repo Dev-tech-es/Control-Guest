@@ -49,3 +49,21 @@ If you have chosen the type ' txt ' if you
 do not enter any name the default is 'log' .
 Information on time zones .
 
+Example txt file.
+=============
+```
+Visit of the day 15-12-14 to 06:14:26
+Browser: Google Chrome
+Operating System: Linux
+Robot: Unknown
+City: Mountain View
+Ip: 74.125.195.147
+Country code: US
+Continent Code: NA
+Alt: 37.4192
+Long: -122.0574
+Asn: Unknown
+Isp: Google Inc.
+Time zone: America/Los_Angeles
+#######################################
+```
