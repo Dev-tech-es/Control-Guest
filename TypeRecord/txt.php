@@ -2,7 +2,12 @@
 
 			if ($file==null) {
 				
-				date_default_timezone_set($this->timezone);
+				if (isset($this->timezone)&&!empty($this->timezone)) {
+					date_default_timezone_set($this->timezone);
+				}else{
+					date_default_timezone_set('Europe/Madrid');
+				}
+				
 				$file = date('m-y');
 			}
 

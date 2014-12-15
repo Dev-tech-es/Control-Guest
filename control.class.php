@@ -64,7 +64,12 @@ class Control_guest
 	/// Metodo: Determinar fecha y horario
 	public function time()
 	{
-		date_default_timezone_set($this->timezone);
+		if (isset($this->timezone)&&!empty($this->timezone)) {
+			date_default_timezone_set($this->timezone);
+		}else{
+			date_default_timezone_set('Europe/Madrid');
+		}
+		
 		$this->date=date('d-m-y');
 		$this->hour=date('H:i:s');
 	}
