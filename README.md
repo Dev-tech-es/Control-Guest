@@ -1,11 +1,21 @@
-DEVELOPING
+Control-Guest [ver.1.0]
 =============
-
-Control-Guest
-=============
-
 Management analysis of website visits by PHP programming.
 
+Configuration
+=============
+Before using "Control-Guest" should you configure the connection data from the database .
+* TypeRecord / local.php
+* TypeRecord / remote.php
+
+```
+//Example
+$host_remote = 'localhost';//Insert your domain	
+$user_remote = 'user';//Insert your user
+$pass_remote = 'password'; //Insert your pass_user
+$db_remote 	 = 'logs'; //Insert your name database
+```
+After that you can use the class "Control -Guest ".
 ```
 require 'control.class.php';
 
