@@ -33,6 +33,8 @@ Determine the date and time of the visit.
 ```
 $log ->time();
 ```
+Then leave a link to see him spelling of your time zone.
+[+info: Time zones](http://php.net/manual/es/timezones.php)
 Create the record.
 =============
 The optional parameter is :
@@ -47,6 +49,3 @@ If you have chosen the type ' txt ' if you
 do not enter any name the default is 'log' .
 Information on time zones .
 
-=============
-Then leave a link to see him spelling of your time zone.
-[+info: Time zones](http://php.net/manual/es/timezones.php)
