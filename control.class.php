@@ -49,6 +49,8 @@ class Control_guest
 	}
 
 
+	///////////////////////////////////////
+	//Method: Get
 	public function __get($key)
 	{
 		if (isset($this->properties[$key])) {
@@ -216,7 +218,7 @@ class Control_guest
 	}
 
 	///////////////////////////////////////
-	//Method: Country.
+	//Method: Geo
 	public function geo(){
 				
 		$ip = $_SERVER['REMOTE_ADDR'];
@@ -227,8 +229,10 @@ class Control_guest
 
 		$this->properties= json_decode($data,true);
 
-}
+	}
 
+	///////////////////////////////////////
+	//Method: Geo Resquest
 	public function sendRequest($url)
 	{
 		$curl = curl_init();
