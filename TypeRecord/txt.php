@@ -1,7 +1,9 @@
 <?php 
 
 			if ($file==null) {
-				$file = "log";
+				
+				date_default_timezone_set($this->timezone);
+				$file = date('m-y');
 			}
 
 			$directorio = $_SERVER['DOCUMENT_ROOT']."/web/log";
