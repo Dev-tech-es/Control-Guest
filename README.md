@@ -18,6 +18,8 @@ $user_remote = 'user';//Insert your user
 $pass_remote = 'password'; //Insert your pass_user
 $db_remote 	 = 'logs'; //Insert your name database
 ```
+Start "Control-Guest"
+=============
 After that you can use the class "Control -Guest ".
 ```
 require 'control.class.php';
