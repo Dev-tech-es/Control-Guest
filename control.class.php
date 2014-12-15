@@ -73,8 +73,6 @@ class Control_guest
 	//Method: Create log.
 	public function createLog($file=null){
 
-		date_default_timezone_set($this->timezone);
-		$file = date('m-y');
 		if ($this->type=='Local') {
 		//In case of 'local' scope .
 
