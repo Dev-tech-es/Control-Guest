@@ -12,7 +12,7 @@
 			}
 
 			$directorio = $_SERVER['DOCUMENT_ROOT']."/web/log";
-			$fileCreate = $file.".txt";
+			$fileCreate = "log.".$file.".txt";
 			
 			$fileContruct=fopen($directorio."/".$fileCreate,"a") 
 			or die ("The file '".$fileCreate."' could not be created.");
