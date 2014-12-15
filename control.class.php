@@ -10,9 +10,12 @@ class Control_guest
 	private $country;
 	private $agent;
 	private $robot;
-	private $date;
-	private $hour;
+	public $date;
+	public $hour;
 	private $ip;
+	protected $api = "http://www.telize.com/geoip/%s";
+	protected $properties = [];
+
 
 
 	///////////////////////////////////////
@@ -22,7 +25,7 @@ class Control_guest
 		if ($type=='Local') {
 			
 			$this->type ="Local";
-			
+
 
 		}elseif ($type=='Remote') {
 
@@ -46,11 +49,22 @@ class Control_guest
 		$this->ip 		= $_SERVER['REMOTE_ADDR'];
 		
 	}
+
+
+	public function __get($key)
+	{
+		if (isset($this->properties[$key])) {
+			return $this->properties[$key];
+		}
+
+		return null;
+	}
+
 	////////////////////////////////////////////////////
 	/// Metodo: Determinar fecha y horario
-	public function time($timeZone ="Europe/Madrid")
+	public function time()
 	{
-		date_default_timezone_set($timeZone);
+		date_default_timezone_set($this->timezone);
 		$this->date=date('d-m-y');
 		$this->hour=date('H:i:s');
 	}
@@ -60,7 +74,9 @@ class Control_guest
 	public function createLog($file=null){
 
 		if ($this->type=='Local') {
-		//In case of 'local' scope .	
+		//In case of 'local' scope .
+
+		echo $this->city;	
 			
 
 		}elseif ($this->type=='Remote') {
@@ -74,7 +90,7 @@ class Control_guest
 				$file = "log";
 			}
 
-			$directorio = $_SERVER['DOCUMENT_ROOT']."/log";
+			$directorio = $_SERVER['DOCUMENT_ROOT']."/web/log";
 			$fileCreate = $file.".txt";
 			
 			$fileContruct=fopen($directorio."/".$fileCreate,"a") 
@@ -82,17 +98,35 @@ class Control_guest
 
 			fwrite($fileContruct, "Visit of the day ".$this->date." to ".$this->hour."");
 			fwrite($fileContruct, "\n");
-			fwrite($fileContruct, "Browser: ".$this->browser);
+			fwrite($fileContruct, "Browser: ".$this->browser());
 			fwrite($fileContruct, "\n");
-			fwrite($fileContruct, "Operating System: ".$this->system);
+			fwrite($fileContruct, "Operating System: ".$this->system());
 			fwrite($fileContruct, "\n");
-			fwrite($fileContruct, "Robot: ".$this->robot);
+			fwrite($fileContruct, "Robot: ".$this->robot());
+			fwrite($fileContruct, "\n");
+			fwrite($fileContruct, "City: ".$this->city);
+			fwrite($fileContruct, "\n");
+			fwrite($fileContruct, "Ip: ".$this->ip);
+			fwrite($fileContruct, "\n");
+			fwrite($fileContruct, "Country code: ".$this->country_code);
+			fwrite($fileContruct, "\n");
+			fwrite($fileContruct, "Continent Code: ".$this->continent_code);
+			fwrite($fileContruct, "\n");
+			fwrite($fileContruct, "Alt: ".$this->latitude);
+			fwrite($fileContruct, "\n");
+			fwrite($fileContruct, "Long: ".$this->longitude);
+			fwrite($fileContruct, "\n");
+			fwrite($fileContruct, "Asn: ".$this->asn);
+			fwrite($fileContruct, "\n");
+			fwrite($fileContruct, "Isp: ".$this->isp);
+			fwrite($fileContruct, "\n");
+			fwrite($fileContruct, "Time zone: ".$this->timezone);
 			fwrite($fileContruct, "\n");
 			fwrite($fileContruct, "#######################################");
+			fwrite($fileContruct, "\n");
+			$close = fclose($fileContruct);
 
-			fclose($fileContruct);
-
-			if (fclose($fileContruct)==true) {
+			if ($close==true) {
 				//Log generado correctamente
 				echo "<script>console.log('Log creado');</script>";
 
@@ -229,22 +263,24 @@ class Control_guest
 
 	///////////////////////////////////////
 	//Method: Country.
-	public  function country()
+	public function geo($ip="80.174.156.198"){
+		
+		$url = sprintf($this->api, $ip);
+
+		$data =$this->sendRequest($url);
+
+		$this->properties= json_decode($data,true);
+
+
+	}
+
+	public function sendRequest($url)
 	{
-			
-			echo $ipCliente='1.2.3.4';
-			echo "<br>--------------<br>";
-			// Ejemplo 1
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_URL, $url);
 
-			$ipCliente	= explode(".", $ipCliente);
-			$red 		= (int)$ipCliente[0]; //Red
-			$subred 	= (int)$ipCliente[1]; //Subred
-			$dominio 	= (int)$ipCliente[2]; //Dominio
-			$pc 		= (int)$ipCliente[3]; //Ordenador
-
-			$ipnumerica = $pc+($dominio*256)+($subred*256*256)+($red*256*256*256);
-			echo $ipnumerica;
-
+		return curl_exec($curl);
 	}
 }
 
