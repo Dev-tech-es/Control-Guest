@@ -215,7 +215,9 @@ class Control_guest
 
 	///////////////////////////////////////
 	//Method: Country.
-	public function geo($ip="80.174.156.198"){
+	public function geo(){
+		
+		$ip = $_SERVER['REMOTE_ADDR'];
 		
 		$url = sprintf($this->api, $ip);
 
