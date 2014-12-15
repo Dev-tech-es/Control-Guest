@@ -4,15 +4,13 @@ DEVELOPING
 Control-Guest
 =============
 
-Management analysis views .
+Management analysis of website visits by PHP programming.
 
 ```
-<?php 
 require 'control.class.php';
 
 //We called the class.
 $log = new Control_guest(/*Indicate the type of record.*/);
-?>
 ```
 Types of records:
  1. Local
@@ -33,9 +31,7 @@ Enabled  time zone.
 Determine the date and time of the visit.
 
 ```
-<?php
 $log ->time();
-?>
 ```
 Create the record.
 =============
@@ -44,10 +40,8 @@ The name of the file type if you
 determine in case the parameter 'txt'.
 
 ```
-<?php 
 //We called to method
 $log -> createLog(/*May indicate an optional parameter.*/);
- ?>
 ```
 If you have chosen the type ' txt ' if you
 do not enter any name the default is 'log' .
