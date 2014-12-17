@@ -1,0 +1,69 @@
+/*
+Proyect: Control-Guest  ver 1.0
+Athor: Sergio Gonzalez Garrido
+Location: Barcelona (Spain)
+Sice: December 2014
+*/
+
+/********************************************/
+/*RESETEAR EL CSS*/
+@import url('reset.css');
+
+/********************************************/
+/*STYLE DEFAULT*/
+body 
+{background-color: rgb(166, 166, 166);
+font-family: sans-serif;}
+
+div.responsive 
+{position: fixed;
+background: rgb(240, 240, 240);
+padding: 23px;
+left: 18%;
+width: 57%;
+height: 100%;}
+
+div.responsive>h1
+{font-size: 2em;color: rgb(0, 216, 255);
+text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.67);}
+
+div.responsive>h2
+{font-weight: 600;
+color: rgb(0, 216, 255);
+text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.67);}
+
+div.responsive>h3
+{font-size: 1.5em;
+border-bottom: solid 2px;
+margin-top: 25px;
+padding-bottom: 7px;
+margin-bottom: 5px;
+color: rgb(86, 86, 86);}
+
+div.box
+{background: gray;
+padding: 15px;
+color: white;}
+
+.box>h3 
+{border-bottom: solid 1px;}
+
+table 
+{margin-bottom: 11px;
+margin-top: 14px;
+width: 100%;
+color: rgb(226, 226, 226);}
+
+a 
+{text-decoration: none;
+background-color: rgb(28, 193, 223);
+color: white;
+padding: 6px;}
+
+tr>td:nth-child(2) 
+{color: rgb(0, 216, 255);}
+
+td 
+{padding-bottom: 3px;}
+
+/********************************************/

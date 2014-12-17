@@ -1,7 +1,18 @@
 <?php 
 
+///////////////////////////////////////////
+/// Developer : Sergio González Garrido
+///	Location : Barcelona (Spain)
+///	Create : 15/12/2014
+///	Version: 1.0
+///////////////////////////////////////////
+
+//error_reporting(0);
+
 class Control_guest
 {	
+	public $version = '1.0';
+
 	///////////////////////////////////////
 	//Property
 	private $type;
@@ -10,50 +21,62 @@ class Control_guest
 	private $country;
 	private $agent;
 	private $robot;
-	public $date;
-	public $hour;
+	private $date;
+	private $hour;
 	private $ip;
-	protected $api = "http://www.telize.com/geoip/%s";
+	//protected $api = "http://www.telize.com/geoip/%s";
 	protected $properties = [];
+	private $host;		
+	private $user_host; 
+	private $user_pass; 
+	private $database;
+	
 
 
 
 	///////////////////////////////////////
 	//Method: Construct
-	 public function __construct($type='Local'){
+	 public function __construct($type='txt'){
 
-		if ($type=='Local') {
+		if ($type=='local') {
 			
-			$this->type ="Local";
+			$this->type ="local";
+			$verificar = true;
 
-		}elseif ($type=='Remote') {
+		}elseif ($type=='remote') {
 
-			$this->type ="Remote";
+			$this->type ="remote";
+			$verificar = true;
 		
 		}elseif ($type=='txt') {
 
 			$this->type ="txt";
-			
+			$verificar = true;
+		
 		}elseif ($type=='test') {	
 			
-			$this->type ="test";	
-			
+			$this->type ="test";
+			$verificar = true;
+
 		}else{
 
-			$this->type = "";
+			echo "<div style='position: fixed;top: 0;z-index: 999;background: rgb(229, 97, 97);color: white;padding: 9px;width: 100%;'>Introdujo un parametro no valido.</div>";
+			$verificar = false;
 		}
 
-		$this->browser 	= $this->browser();
-		$this->system 	= $this->system();
-		$this->agent  	= $_SERVER['HTTP_USER_AGENT'];
-		$this->robot 	= $this->robot();
-		$this->ip 		= $_SERVER['REMOTE_ADDR'];
+		if ($verificar==true) {
+
+			$this->browser 	= $this->browser();
+			$this->system 	= $this->system();
+			$this->agent  	= $_SERVER['HTTP_USER_AGENT'];
+			$this->robot 	= $this->robot();
+			$this->ip 		= $_SERVER['REMOTE_ADDR'];
+		}
+		
 		
 	}
 
 
-	///////////////////////////////////////
-	//Method: Get
 	public function __get($key)
 	{
 		if (isset($this->properties[$key])) {
@@ -64,8 +87,108 @@ class Control_guest
 	}
 
 	////////////////////////////////////////////////////
+	/// Metodo: Configuración del hosting
+	public function config($host=null,$user_host=null,$user_pass=null,$database=null,$default=false){
+
+		if ($default==true) {
+			if (isset($host)&&!empty($host)&&
+				isset($user_host)&&!empty($user_host)&&
+				isset($user_pass)&&!empty($user_pass)&&
+				isset($database)&&!empty($database)) {
+			
+			$this->host= $host;		
+			$this->user_host= $user_host; 
+			$this->user_pass= $user_pass; 
+			$this->database= $database;
+
+		}else{
+			echo "<script>console.log('No introdujo todos los datos. Debe introducir los 4 datos requeridos: host, user, pass, database')</script>";
+		}
+		}else{
+			echo "<script>console.log('La base de datos no fue activada.')</script>";
+		}
+		
+		
+	}
+
+	
+	///////////////////////////////////////
+	//Method: Create log.
+	public function createLog($file=null){
+
+		if ($this->type=='local') {
+		//In case of 'local' scope .
+
+		require 'TypeRecord/local.php';
+			
+		}elseif ($this->type=='remote') {
+		//In case of 'remote' scope .
+		
+		require 'TypeRecord/remote.php';
+			
+		}elseif ($this->type=='txt') {
+		//In case of 'txt' scope .
+
+		require 'TypeRecord/txt.php';
+
+		}elseif ($this->type=='test') {
+		//In case of 'test' scope .
+		
+		require_once 'TypeRecord/test.php';
+		return $data;//Return array
+
+		}
+
+
+	}
+	///////////////////////////////////////
+	//Method: Browser.
+	public  function browser()
+	{	
+		require 'Browser/browser.php';
+	}
+
+	///////////////////////////////////////
+	//Method: System.
+	public  function system()
+	{
+		require 'System/system.php';
+	}
+
+	//////////////////////////////////////
+	//Method: Robot.
+	public  function robot()
+	{	
+		require 'Robot/robot.php';
+	}
+
+	///////////////////////////////////////
+	//Method: Dispositivo
+	public function dispo()
+	{
+		require 'Smartphone';
+	}
+
+
+	///////////////////////////////////////
+	//Method: Country.
+	public function geo(){
+
+		$ip = '153.121.37.166';/*IP DE PRUEBAS*/
+				
+		//$ip = $_SERVER['REMOTE_ADDR'];
+		
+		$url = sprintf($this->api, $ip);
+
+		$data =$this->sendRequest($url);
+
+		$this->properties= json_decode($data,true);
+
+ 	}
+
+ 	////////////////////////////////////////////////////
 	/// Metodo: Determinar fecha y horario
-	public function time()
+	public function dateHour()
 	{
 		if (isset($this->timezone)&&!empty($this->timezone)) {
 			date_default_timezone_set($this->timezone);
@@ -75,182 +198,10 @@ class Control_guest
 		
 		$this->date=date('d-m-y');
 		$this->hour=date('H:i:s');
-	}
 
-	///////////////////////////////////////
-	//Method: Create log.
-	public function createLog($file=null){
-
-		if ($this->type=='Local') {
-		//In case of 'local' scope .
-
-		require 'TypeRecord/local.php';
-			
-		}elseif ($this->type=='Remote') {
-		//In case of 'remote' scope .
 		
-		require 'TypeRecord/remote.php';
-			
-		}elseif ($this->type=='txt') {
-		//In case of 'txt' scope .
-
-		require 'TypeRecord/txt.php';	
-					
-		}elseif ($this->type=='test') {
-			
-
-			return array(	'date'=>$this->date,
-							'hour'=>$this->hour,
-							'browser'=>$this->browser(),
-							'system'=>$this->system(),
-							'city'=>$this->city,
-							'ip'=>$this->ip,
-							'country_code'=>$this->country_code,
-							'continent_code'=>$this->continent_code,
-							'latitude'=>$this->latitude,
-							'longitude'=>$this->longitude,
-							'asn'=>$this->asn,
-							'timezone'=>$this->timezone);
-		}
-
-
-	}
-	///////////////////////////////////////
-	//Method: Browser.
-	public  function browser()
-	{	
-		$agent = $this->agent;
-
-		if (preg_match('/MSIE/i', $agent)
-		&&!preg_match('/Opera/i', $agent)){
-			$bname	="Internet Explorer";
-			$ub 	= "MSIE";
-		}elseif(preg_match('/Firefox/i', $agent)){
-			$bname	="Mozilla Firefox";
-			$ub 	= "Firefox";
-		}elseif(preg_match('/Chrome/i', $agent)) {
-			$bname	="Google Chrome";
-			$ub 	= "Chrome";
-		}elseif(preg_match('/Safari/i', $agent)) {
-			$bname	="Apple Safari";
-			$ub 	= "Safari";
-		}elseif(preg_match('/Opera/i', $agent)) {
-			$bname	="Opera";
-			$ub 	= "Opera";
-		}elseif(preg_match('/Netscape/i', $agent)) {
-			$bname	="Netscape";
-			$ub 	= "Netscape";
-		}else{
-			$bname	= 'Unknown';
-		}
-
-		return $bname;
 	}
 
-	///////////////////////////////////////
-	//Method: System.
-	public  function system()
-	{
-		$useragent = strtolower($this->agent);
-
-	
-		if (strpos($useragent, 'windows nt 5.1')!==FALSE) {
-			return 'Windows XP';
-		}elseif (strpos($useragent, 'windows nt 6.3')!==FALSE) {
-			return 'Windows 8';
-		}elseif (strpos($useragent, 'windows nt 6.1')!==FALSE) {
-			return 'Windows 7';
-		}elseif (strpos($useragent, 'windows nt 6.0')!==FALSE) {
-			return 'Windows Vista';
-		}elseif (strpos($useragent, 'windows 98')!==FALSE) {
-			return 'Windows 98';
-		}elseif (strpos($useragent, 'windows nt 5.0')!==FALSE) {
-			return 'Windows 2000';
-		}elseif (strpos($useragent, 'windows nt 5.2')!==FALSE) {
-			return 'Windows 2003 Server';
-		}elseif (strpos($useragent, 'windows nt')!==FALSE) {
-			return 'Windows NT';
-		}elseif (strpos($useragent, 'win 9x 4.90')!==FALSE
-			&&strpos($useragent, 'win me')) {
-			return 'Windows ME';
-		}elseif (strpos($useragent, 'win ce')!==FALSE) {
-			return 'Windows CE';
-		}elseif (strpos($useragent, 'win 9x 4.90')!==FALSE) {
-			return 'Windows ME';
-		}elseif (strpos($useragent, 'iphone')!==FALSE) {
-			return 'iPhone';
-		}elseif (strpos($useragent, 'ipad')!==FALSE) {
-			return 'iPad';
-		}elseif (strpos($useragent, 'webOS')!==FALSE) {
-			return 'webOS';
-		}elseif (strpos($useragent, 'symbian')!==FALSE) {
-			return 'Symbian';
-		}elseif (strpos($useragent, 'android')!==FALSE) {
-			return 'Android';
-		}elseif (strpos($useragent, 'blackberry')!==FALSE) {
-			return 'Blackberry';
-		}elseif (strpos($useragent, 'macintosh')!==FALSE) {
-			return 'Macintosh';
-		}elseif (strpos($useragent, 'linux')!==FALSE) {
-			return 'Linux';
-		}elseif (strpos($useragent, 'freebsd')!==FALSE) {
-			return 'Free BSD';
-		}elseif (strpos($useragent, 'symbian')!==FALSE) {
-			return 'Symbian';
-		}else{
-			return 'Unknown';
-		}
-			
-	}
-
-	//////////////////////////////////////
-	//Method: Robot.
-	public  function robot()
-	{	
-		
-		$useragent = strtolower($this->agent);
-
-		if (strpos($useragent, 'googlebot/2.1')!==FALSE) {
-			return 'Robot: Googlebot/2.1';
-		}elseif (strpos($useragent, 'nooglebot-news')!==FALSE) {
-			return 'Robot: Googlebot News';
-		}elseif (strpos($useragent, 'googlebot-image/1.0')!==FALSE) {
-			return 'Robot: Googlebot Images';
-		}elseif (strpos($useragent, 'googlebot-video/1.0')!==FALSE) {
-			return 'Robot: Googlebot Video';
-		}elseif (strpos($useragent, 'googlebot-mobile/2.1')!==FALSE) {
-			return 'Robot: Google Mobile';
-		}elseif (strpos($useragent, 'mediapartners-google/2.1')!==FALSE) {
-			return 'Robot: Google Mobile AdSense';
-		}elseif (strpos($useragent, 'mediapartners-google')!==FALSE) {
-			return 'Robot: Google AdSense';
-		}elseif (strpos($useragent, 'adsbot-google')!==FALSE) {
-			return 'Robot: AdsBot-Google';
-		}elseif (strpos($useragent, 'yahoo! slurp/3.0')!==FALSE) {
-			return 'Robot: Yahoo';
-		}elseif (strpos($useragent, 'bingbot/2.0')!==FALSE) {
-			return 'Robot: Bing';
-		}else{
-			return 'Unknown';
-		}
-	}
-
-	///////////////////////////////////////
-	//Method: Geo
-	public function geo(){
-				
-		$ip = $_SERVER['REMOTE_ADDR'];
-		
-		$url = sprintf($this->api, $ip);
-
-		$data =$this->sendRequest($url);
-
-		$this->properties= json_decode($data,true);
-
-	}
-
-	///////////////////////////////////////
-	//Method: Geo Resquest
 	public function sendRequest($url)
 	{
 		$curl = curl_init();

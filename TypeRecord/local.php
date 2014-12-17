@@ -4,10 +4,10 @@
 	// Before using "Control-Guest" should you configure 
 	// the connection data from the database .
 	################################################################
-	$host_local = 'localhost';		
-	$user_local = ''; //Insert your user
-	$pass_local = ''; //Insert your pass_user
-	$db_local 	= ''; //Insert your name database
+	$host_local = $this->host;		
+	$user_local = $this->user_host; //Insert your user
+	$pass_local = $this->user_pass; //Insert your pass_user
+	$db_local 	= $this->database; //Insert your name database
 	################################################################
 		
 	$connect = mysqli_connect($host_local, $user_local, $pass_local, $db_local)
