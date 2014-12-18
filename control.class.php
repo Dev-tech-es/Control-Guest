@@ -179,9 +179,9 @@ class Control_guest
 	//Method: Country.
 	public function geo(){
 
-		$ip = '64.233.166.104';/*IP DE PRUEBAS*/
+		//$ip = '64.233.166.104';/*IP DE PRUEBAS*/
 				
-		//$ip = $_SERVER['REMOTE_ADDR'];
+		$ip = $_SERVER['REMOTE_ADDR'];
 		
 		$url = sprintf($this->api, $ip);
 
