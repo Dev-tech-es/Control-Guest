@@ -1,7 +1,4 @@
 <?php 
-$du = $this->robot();
-var_dump($du);
-
 $data = array(	'date'=>$this->date,
 				'hour'=>$this->hour,
 				'browser'=>$this->browser(),
