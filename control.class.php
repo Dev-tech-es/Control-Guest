@@ -124,8 +124,10 @@ class Control_guest
 		}elseif ($this->type=='remote') {
 		//In case of 'remote' scope .
 		
-		require 'TypeRecord/remote.php';
-			
+		require_once 'TypeRecord/remote.php';
+		return $info;
+		
+
 		}elseif ($this->type=='txt') {
 		//In case of 'txt' scope .
 
@@ -179,9 +181,9 @@ class Control_guest
 	//Method: Country.
 	public function geo(){
 
-		$ip = '64.233.166.104';/*IP DE PRUEBAS*/
+		//$ip = '64.233.166.104';/*IP DE PRUEBAS*/
 				
-		//$ip = $_SERVER['REMOTE_ADDR'];
+		$ip = $_SERVER['REMOTE_ADDR'];
 		
 		$url = sprintf($this->api, $ip);
 

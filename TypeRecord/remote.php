@@ -1,16 +1,20 @@
-<?
+<?php
 	################################################################
 	// Before using "Control-Guest" should you configure 
 	// the connection data from the database .
 	################################################################
-	$host_remote = $this->host; //Insert your domain	
-	$user_remote = $this->user_host; //Insert your user
-	$pass_remote = $this->user_pass; //Insert your pass_user
-	$db_remote 	 = $this->database; //Insert your name database
+	$hostremote = $this->host; //Insert your domain	
+	$userremote = $this->user_host; //Insert your user
+	$passremote = $this->user_pass; //Insert your pass_user
+	$dbremote 	 = $this->database; //Insert your name database
 	################################################################
-		
-	$connect = mysqli_connect($host_remote, $user_remote, $pass_remote, $db_remote)
-	or die("No se ha podido conectar: " . mysql_error()); //'error connect'
+	
+	$connect = mysqli_connect($this->host, $this->user_host, $this->user_pass, $this->database);
+	 if (mysqli_connect_errno())
+    {
+    echo "Error al conectar con servidor MySQL: " . mysqli_connect_error();
+    }
+	
 
 	mysqli_set_charset($connect,'utf8');
 
@@ -51,6 +55,7 @@
 	
 	if ($info==true) {
 		
+		$info = "<script>console.log('Insertando datos: '".$name."'.')</script>";
 
 		$insert = "INSERT INTO `".$name."`";
 		$insert.= "(`LogDate`, `LogHour`, `LogBrowser`,";
@@ -67,7 +72,7 @@
 
 	}else{
 
-		echo "<script>console.log('La tabla: '".$name."', no fue creada.')</script>";
+		$info = "<script>console.log('La tabla: '".$name."', no fue creada.')</script>";
 	}
 
 	
