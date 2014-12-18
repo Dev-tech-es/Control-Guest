@@ -1,5 +1,8 @@
 <?php 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 $data = array(	'date'=>$this->date,
 				'hour'=>$this->hour,
 				'browser'=>$this->browser(),
