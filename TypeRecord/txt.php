@@ -10,8 +10,16 @@
 				
 				$file = date('m-y');
 			}
+			//crear carpeta log
 
-			$directorio = $_SERVER['DOCUMENT_ROOT']."/web/log";
+			$directorio = $_SERVER['DOCUMENT_ROOT']."/Control-Guest-logs";
+
+			if(!file_exists($directorio))
+			{
+			mkdir ($directorio);
+			echo "<script>console.log('Directorio creado')</script>";
+			}
+
 			$fileCreate = "log.".$file.".txt";
 			
 			$fileContruct=fopen($directorio."/".$fileCreate,"a") 
