@@ -24,7 +24,7 @@ class Control_guest
 	private $date;
 	private $hour;
 	private $ip;
-	//protected $api = "http://www.telize.com/geoip/%s";
+	protected $api = "http://www.telize.com/geoip/%s";
 	protected $properties = [];
 	private $host;		
 	private $user_host; 
@@ -135,6 +135,7 @@ class Control_guest
 		//In case of 'test' scope .
 		
 		require_once 'TypeRecord/test.php';
+
 		return $data;//Return array
 
 		}
@@ -146,6 +147,7 @@ class Control_guest
 	public  function browser()
 	{	
 		require 'Browser/browser.php';
+		return $bname;
 	}
 
 	///////////////////////////////////////
@@ -153,6 +155,7 @@ class Control_guest
 	public  function system()
 	{
 		require 'System/system.php';
+		return $system;
 	}
 
 	//////////////////////////////////////
@@ -160,6 +163,7 @@ class Control_guest
 	public  function robot()
 	{	
 		require 'Robot/robot.php';
+		return $robot;
 	}
 
 	///////////////////////////////////////
@@ -167,6 +171,7 @@ class Control_guest
 	public function dispo()
 	{
 		require 'Smartphone';
+		return $smartphone;
 	}
 
 
@@ -174,7 +179,7 @@ class Control_guest
 	//Method: Country.
 	public function geo(){
 
-		$ip = '153.121.37.166';/*IP DE PRUEBAS*/
+		$ip = '64.233.166.104';/*IP DE PRUEBAS*/
 				
 		//$ip = $_SERVER['REMOTE_ADDR'];
 		

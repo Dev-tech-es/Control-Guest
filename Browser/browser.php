@@ -25,7 +25,7 @@ if (preg_match('/MSIE/i', $agent)
 			$bname	= 'Unknown';
 }
 
-		return $bname;
+		
 
 
  ?>
